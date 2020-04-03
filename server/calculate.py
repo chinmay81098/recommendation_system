@@ -6,7 +6,6 @@ def recommendation(user):
     data = pd.read_csv("./data/out.csv")
     genreTable = pd.read_csv("./data/genreTable.csv")
     movies_df = data[["movieId","title","genres","year"]]
-    print(user)
     inputmovies = pd.DataFrame(user)
     userMovies = data[data["title"].isin(inputmovies["title"].tolist())]
     userMovies.drop(["genres","year"],axis=1,inplace=True)
