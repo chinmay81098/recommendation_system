@@ -14,6 +14,10 @@ app.config.from_object(__name__)
 
 CORS(app, resources={r'/*': {'origins': '*'}})
 
+
+userRating = ''
+
+
 @app.route("/",methods=["GET"])
 def request_handler1():
     df=pd.read_csv("./data/suggestion.csv")
@@ -21,11 +25,16 @@ def request_handler1():
     payload=df1.to_json(orient="records")
     return payload
 
+@app.route("/response",methods=["GET"])
+def send_response():
+    return recommendation(userRating)
+
 @app.route("/send",methods=["POST","GET"])
 def request_handler():
+    global userRating
     if request.method == "POST":
-        return recommendation(request.json)
-
+        userRating = request.json
+    return "recieved"
 
 
 
